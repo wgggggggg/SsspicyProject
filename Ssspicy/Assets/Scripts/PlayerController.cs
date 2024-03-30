@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -38,39 +39,33 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    bool MoveOrEat(Vector2 dir)
+    void MoveOrEat(Vector2 dir)
     {   
-        //True表示移动或者吃东西成功,False表示啥都没干
         //返回玩家能否前进一步(排除地面层)
         RaycastHit2D hit = Physics2D.Raycast(transform.position + (Vector3)dir * 0.5f, dir, 0.5f, otherLayer);
         if (!hit)
         {
             Move(dir);
-            return true;
         } else { //判断遇到的这个Body是不是最后一个Body
             if (hit.collider.GetComponent<Body>() != null)
             {
-                GameObject hitObject = hit.collider.gameObject;
-                Transform bodyParent = hit.collider.transform.parent;
-                int childCount = bodyParent.childCount;
-                int indexOfHitObject = hitObject.transform.GetSiblingIndex();
-                bool isLastChild = (indexOfHitObject == childCount - 1);
-                if (isLastChild)
+                if(bodyNum(hit) != 1 && isLastBody(hit))
                 {
                     Move(dir);
-                    return true;
-                } else
-                {
-                    return false;
                 }
-            }
-            if (hit.collider.GetComponent<Food>() != null)
+                //是食物的话就调用食物的MoveOrEaten
+            } else if (hit.collider.GetComponent<Food>() != null)
             {   
                 //吃东西或者推东西的时候伴随的移动在Food里调用
                 hit.collider.GetComponent<Food>().MoveOrEaten(dir);
-                return true;
+                //是其它Movable就调用一般的MoveIfCan
+            } else if (hit.collider.GetComponent<Movable>() != null)
+            {
+                if (hit.collider.GetComponent<Movable>().MoveIfCan(dir))
+                {
+                    Move(dir);
+                }
             }
-            return false; //目前遇到除了食物之外的物体都不可移动
         }
     }
 
@@ -105,4 +100,20 @@ public class PlayerController : MonoBehaviour
     {
         GetComponent<Fly>().FlyStart(dir);
     } 
+
+    bool isLastBody(RaycastHit2D hit)
+    {
+        GameObject hitObject = hit.collider.gameObject;
+        Transform bodyParent = hit.collider.transform.parent;
+        int childCount = bodyParent.childCount;
+        int indexOfHitObject = hitObject.transform.GetSiblingIndex();
+        return (indexOfHitObject == childCount - 1);
+    }
+
+    int bodyNum(RaycastHit2D hit)
+    {
+        Transform bodyParent = hit.collider.transform.parent;
+        int childCount = bodyParent.childCount;
+        return childCount;
+    }
 }

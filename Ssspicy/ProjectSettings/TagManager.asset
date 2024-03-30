@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ground
+  - body
+  - head
   layers:
   - Default
   - TransparentFX
@@ -14,11 +17,11 @@ TagManager:
   - Ground
   - Wall
   - Banana
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Pepper
+  - Body
+  - Player
+  - Wood
+  - Ice
   - 
   - 
   - 
