@@ -29,10 +29,7 @@ public class PlayerController : MonoBehaviour
         }
         if (moveDir != Vector2.zero)
         {
-            if (canMove(moveDir))
-            {
-                move(moveDir);
-            }
+            MoveOrEat(moveDir);
         }
         moveDir = Vector2.zero;
         if(shouldFall())
@@ -41,17 +38,35 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    bool canMove(Vector2 dir)
-    {
+    bool MoveOrEat(Vector2 dir)
+    {   
+        //True表示移动或者吃东西成功,False表示啥都没干
         //返回玩家能否前进一步(排除地面层)
         RaycastHit2D hit = Physics2D.Raycast(transform.position + (Vector3)dir * 0.5f, dir, 0.5f, otherLayer);
-
         if (!hit)
         {
+            Move(dir);
             return true;
-        } else {
-            if (hit.collider.GetComponent<Food>() != null)
+        } else { //判断遇到的这个Body是不是最后一个Body
+            if (hit.collider.GetComponent<Body>() != null)
             {
+                GameObject hitObject = hit.collider.gameObject;
+                Transform bodyParent = hit.collider.transform.parent;
+                int childCount = bodyParent.childCount;
+                int indexOfHitObject = hitObject.transform.GetSiblingIndex();
+                bool isLastChild = (indexOfHitObject == childCount - 1);
+                if (isLastChild)
+                {
+                    Move(dir);
+                    return true;
+                } else
+                {
+                    return false;
+                }
+            }
+            if (hit.collider.GetComponent<Food>() != null)
+            {   
+                //吃东西或者推东西的时候伴随的移动在Food里调用
                 hit.collider.GetComponent<Food>().MoveOrEaten(dir);
                 return true;
             }
@@ -59,7 +74,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void move(Vector2 dir)
+    public void Move(Vector2 dir)
     {
         //先移动身体，后移动头部
         PlayerBody.GetComponent<PlayerBodyController>().moveBody();
@@ -88,6 +103,6 @@ public class PlayerController : MonoBehaviour
 
     public void Fly(Vector2 dir)
     {
-
+        GetComponent<Fly>().FlyStart(dir);
     } 
 }

@@ -20,6 +20,7 @@ public class Banana : Food
     {
         Destroy(gameObject);
         PlayerBody.GetComponent<PlayerBodyController>().addBodyBeforeMove();
+        Player.GetComponent<PlayerController>().Move(dir);
     }
     
 

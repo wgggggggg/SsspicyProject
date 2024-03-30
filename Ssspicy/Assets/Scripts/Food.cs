@@ -25,6 +25,9 @@ public class Food : MonoBehaviour
         if (!IsMoveOrEaten(dir)) //即需要被吃
         {
             Eaten(dir);
+        } else
+        {
+            Player.GetComponent<PlayerController>().Move(dir);//食物不需要被吃的时候即玩家推动了食物,玩家也需要移动
         }
     }
     public bool IsMoveOrEaten(Vector2 dir)

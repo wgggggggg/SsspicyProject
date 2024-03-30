@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerBodyController : MonoBehaviour
 {
-    public GameObject head;
+    public GameObject Player;
     public GameObject bodyPrefab; //bodyÓÃµÄObject
     public LayerMask groundLayer;
     // Start is called before the first frame update
@@ -34,7 +34,7 @@ public class PlayerBodyController : MonoBehaviour
             {
                 transform.GetChild(i).transform.position = transform.GetChild(i - 1).transform.position;
             }
-            transform.GetChild(0).transform.position = head.transform.position;
+            transform.GetChild(0).transform.position = Player.transform.position;
         }
     }
 

@@ -18,6 +18,7 @@ public class Pepper : Food
 
     public override void Eaten(Vector2 dir)
     {
+        Player.GetComponent<PlayerController>().Move(dir);
         FlyPlayer(-dir);
         Destroy(gameObject);
     }
