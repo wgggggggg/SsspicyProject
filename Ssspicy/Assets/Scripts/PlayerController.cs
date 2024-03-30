@@ -43,18 +43,19 @@ public class PlayerController : MonoBehaviour
 
     bool canMove(Vector2 dir)
     {
-        //返回玩家能否前进一步
+        //返回玩家能否前进一步(排除地面层)
         RaycastHit2D hit = Physics2D.Raycast(transform.position + (Vector3)dir * 0.5f, dir, 0.5f, otherLayer);
 
         if (!hit)
         {
             return true;
         } else {
-            if (hit.collider.GetComponent<Banana>() != null)
+            if (hit.collider.GetComponent<Food>() != null)
             {
-                return hit.collider.GetComponent<Banana>().move(dir);
+                hit.collider.GetComponent<Food>().MoveOrEaten(dir);
+                return true;
             }
-            return false;
+            return false; //目前遇到除了食物之外的物体都不可移动
         }
     }
 
@@ -84,4 +85,9 @@ public class PlayerController : MonoBehaviour
         }
         return false;
     }
+
+    public void Fly(Vector2 dir)
+    {
+
+    } 
 }

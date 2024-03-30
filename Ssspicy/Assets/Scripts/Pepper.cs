@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pepper : MonoBehaviour
+public class Pepper : Food
 {
     // Start is called before the first frame update
     void Start()
@@ -14,5 +14,16 @@ public class Pepper : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public override void Eaten(Vector2 dir)
+    {
+        FlyPlayer(-dir);
+        Destroy(gameObject);
+    }
+
+    void FlyPlayer(Vector2 dir)
+    {
+        Player.GetComponent<PlayerController>().Fly(dir);
     }
 }
