@@ -5,6 +5,7 @@ using UnityEngine;
 public class Banana : MonoBehaviour
 {
     public GameObject PlayerBody;
+    public LayerMask otherLayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +21,7 @@ public class Banana : MonoBehaviour
     public bool move(Vector2 dir)
     {
         //返回香蕉们能不能移动，以及靠墙的时候会被吃掉给玩家增加长度
-        RaycastHit2D hit = Physics2D.Raycast(transform.position + (Vector3)dir * 0.5f, dir, 0.5f);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + (Vector3)dir * 0.5f, dir, 0.5f, otherLayer);
 
         if (!hit)
         {

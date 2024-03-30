@@ -6,6 +6,7 @@ public class PlayerBodyController : MonoBehaviour
 {
     public GameObject head;
     public GameObject bodyPrefab; //bodyÓÃµÄObject
+    public LayerMask groundLayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,5 +36,19 @@ public class PlayerBodyController : MonoBehaviour
             }
             transform.GetChild(0).transform.position = head.transform.position;
         }
+    }
+
+    public bool BodyOutGround()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform nowChild = transform.GetChild(i);
+            RaycastHit2D hit = Physics2D.Raycast(nowChild.transform.position, Vector2.down, 0.1f, groundLayer);
+            if (hit.collider != null)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
