@@ -32,5 +32,14 @@ public class Food : Movable
     {
         Destroy(gameObject);
     }
+
+    public bool IsFoodExist()
+    {
+        if (transform.childCount != 0)
+        {
+            return true;
+        }
+        return false;
+    }
  
 }

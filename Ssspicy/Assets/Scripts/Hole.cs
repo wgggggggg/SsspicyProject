@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Hole : MonoBehaviour
 {
+    public GameObject Food;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +15,10 @@ public class Hole : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public bool IsOpen()
+    {
+        return !Food.GetComponent<Food>().IsFoodExist();
     }
 }

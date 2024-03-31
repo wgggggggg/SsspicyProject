@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     Vector2 moveDir;
     public GameObject PlayerBody;
     public LayerMask groundLayer;
+    public LayerMask bunkerLayer;
+    public LayerMask holeLayer;
     public LayerMask otherLayer;
     private bool dieOrPassDetect;
     // Start is called before the first frame update
@@ -94,6 +96,23 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
+    bool shouldDie()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.1f, bunkerLayer);
+        if (hit) { return true; }
+        return false;
+    }
+
+    bool shouldPass()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.1f, holeLayer);
+        if (hit && hit.collider.GetComponent<Hole>().IsOpen())
+        {
+            return true;
+        }
+        return false;
+    }
+
     public void Fly(Vector2 dir)
     {
         GetComponent<Fly>().FlyStart(dir);
@@ -112,6 +131,14 @@ public class PlayerController : MonoBehaviour
             if (shouldFall())
             {
                 Debug.Log("此时哥们掉落了");
+            }
+            if (shouldPass())
+            {
+                Debug.Log("此时哥们过关了");
+            }
+            if (shouldDie())
+            {
+                Debug.Log("此时哥们踩到沙坑了");
             }
         }
     } //之后还需要加上洞口等
