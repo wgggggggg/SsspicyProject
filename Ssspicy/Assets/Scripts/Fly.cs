@@ -51,6 +51,7 @@ public class Fly : MonoBehaviour
                 if (hit.collider != null && hit.collider.GetComponent<Movable>() == null) //碰到了其他物体就停下来
                 {
                     start = false;
+                    Player.GetComponent<PlayerController>().startDieOrPassDetect(); //启动死亡检测
                     break; // 停止检测其他物体的碰撞
                 }
             }

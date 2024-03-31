@@ -10,10 +10,11 @@ public class PlayerController : MonoBehaviour
     public GameObject PlayerBody;
     public LayerMask groundLayer;
     public LayerMask otherLayer;
+    private bool dieOrPassDetect;
     // Start is called before the first frame update
     void Start()
     {
-        
+        dieOrPassDetect = true;
     }
 
     // Update is called once per frame
@@ -32,11 +33,8 @@ public class PlayerController : MonoBehaviour
         {
             MoveOrEat(moveDir);
         }
+        dieOrPassDetectIfStart();
         moveDir = Vector2.zero;
-        if(shouldFall())
-        {
-            Debug.Log("此时哥们掉落了");
-        }
     }
 
     void MoveOrEat(Vector2 dir)
@@ -99,7 +97,24 @@ public class PlayerController : MonoBehaviour
     public void Fly(Vector2 dir)
     {
         GetComponent<Fly>().FlyStart(dir);
+        dieOrPassDetect = false; //飞行的时候关闭死亡和过关检测
     } 
+
+    public void startDieOrPassDetect()
+    {
+        dieOrPassDetect = true;
+    }
+
+    private void dieOrPassDetectIfStart()
+    {
+        if (dieOrPassDetect)
+        {
+            if (shouldFall())
+            {
+                Debug.Log("此时哥们掉落了");
+            }
+        }
+    } //之后还需要加上洞口等
 
     bool isLastBody(RaycastHit2D hit)
     {
