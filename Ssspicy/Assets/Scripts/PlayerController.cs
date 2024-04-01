@@ -13,15 +13,21 @@ public class PlayerController : MonoBehaviour
     public LayerMask holeLayer;
     public LayerMask otherLayer;
     private bool dieOrPassDetect;
+    private static bool shouldPause;
     // Start is called before the first frame update
     void Start()
     {
         dieOrPassDetect = true;
+        shouldPause = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (shouldPause)
+        {
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.RightArrow)) {
             moveDir = Vector2.right;
         } else if (Input.GetKeyDown(KeyCode.UpArrow)) {
@@ -157,5 +163,16 @@ public class PlayerController : MonoBehaviour
         Transform bodyParent = hit.collider.transform.parent;
         int childCount = bodyParent.childCount;
         return childCount;
+    }
+
+    public static void pauseGame(bool pause)
+    {
+        if (pause)
+        {
+            shouldPause = true;
+        } else
+        {
+            shouldPause = false;
+        }
     }
 }
