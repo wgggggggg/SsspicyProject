@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MenuList : MonoBehaviour
+public class MenuList : LevelControl
 {
     private bool menuOpening;
     public GameObject menuList;
@@ -34,5 +34,13 @@ public class MenuList : MonoBehaviour
                 PlayerController.pauseGame(true);
             }
         }
+    }
+
+    public void Play()
+    {
+        menuList.SetActive(false);
+        menuOpening = false;
+        Time.timeScale = 1f; //后续可以添加bgm的播放与暂停
+        PlayerController.pauseGame(false);
     }
 }
