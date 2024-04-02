@@ -10,12 +10,15 @@ public class Fly : MonoBehaviour
     public GameObject PlayerBody;
     public GameObject Player;
     public LayerMask FlyDetectLayer; //不包括身体和脑袋  也不包括沙坑洞口
-    public bool start = false;
+    bool start = false;
     LinkedList<GameObject> objectList;
     Queue<GameObject> toAddQueue;
     HashSet<GameObject> added;
     public void FlyStart(Vector2 dir)
     {
+        PlayerController.pausePlayerControl(true);
+        Player.GetComponent<Animator>().SetBool("flyStop", false);
+        Player.GetComponent<Animator>().SetBool("spicyEat", true);
         flyDirection = dir;
         start = true;
         Start();
@@ -50,8 +53,7 @@ public class Fly : MonoBehaviour
                 }
                 if (hit.collider != null && hit.collider.GetComponent<Movable>() == null) //碰到了其他物体就停下来
                 {
-                    start = false;
-                    Player.GetComponent<PlayerController>().startDieOrPassDetect(); //启动死亡检测
+                    flyStopFunction();
                     break; // 停止检测其他物体的碰撞
                 }
             }
@@ -61,5 +63,15 @@ public class Fly : MonoBehaviour
                 objectList.AddLast((GameObject)toAddQueue.Dequeue());
             }
         }
+    }
+
+    void flyStopFunction()
+    {
+        Player.GetComponent<Animator>().SetBool("flyStop", true);
+        Player.GetComponent<Animator>().SetBool("spicyEat", false);
+        start = false;
+        Player.GetComponent<PlayerController>().startDieOrPassDetect(); //启动死亡检测
+        PlayerController.pausePlayerControl(false);
+
     }
 }

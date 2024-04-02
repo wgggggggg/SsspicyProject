@@ -13,41 +13,57 @@ public class PlayerController : MonoBehaviour
     public LayerMask holeLayer;
     public LayerMask otherLayer;
     private bool dieOrPassDetect;
-    private static bool shouldPause;
+    private static bool shouldPausePlayerControl;
+    private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
         dieOrPassDetect = true;
-        shouldPause = false;
+        shouldPausePlayerControl = false;
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (shouldPause)
+        if (shouldPausePlayerControl)
         {
             return;
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow)) {
+        moveDetect();
+        dieOrPassDetectIfStart();
+        bodyNumDetect();
+    }
+
+    void moveDetect()
+    {
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
             moveDir = Vector2.right;
-        } else if (Input.GetKeyDown(KeyCode.UpArrow)) {
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
             moveDir = Vector2.up;
-        } else if ( Input.GetKeyDown(KeyCode.DownArrow)) {
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
             moveDir = Vector2.down;
-        } else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
             moveDir = Vector2.left;
         }
         if (moveDir != Vector2.zero)
         {
             MoveOrEat(moveDir);
         }
-        dieOrPassDetectIfStart();
         moveDir = Vector2.zero;
+        //animator.SetBool("startMove", false);
     }
 
     void MoveOrEat(Vector2 dir)
     {   
-        //返回玩家能否前进一步(排除地面层)
+        //玩家能否前进一步(排除地面层)
         RaycastHit2D hit = Physics2D.Raycast(transform.position + (Vector3)dir * 0.5f, dir, 0.5f, otherLayer);
         if (!hit)
         {
@@ -80,6 +96,7 @@ public class PlayerController : MonoBehaviour
         //先移动身体，后移动头部
         PlayerBody.GetComponent<PlayerBodyController>().moveBody();
         transform.Translate(dir);
+        moveAnimDetect(dir);
     }
 
     bool InGround()
@@ -165,14 +182,44 @@ public class PlayerController : MonoBehaviour
         return childCount;
     }
 
-    public static void pauseGame(bool pause)
+    public static void pausePlayerControl(bool pause)
     {
         if (pause)
         {
-            shouldPause = true;
+            shouldPausePlayerControl = true;
         } else
         {
-            shouldPause = false;
+            shouldPausePlayerControl = false;
         }
     }
-}
+
+    void bodyNumDetect()
+    {
+        int bodyNum = PlayerBody.GetComponent<PlayerBodyController>().BodyNum();
+        if (bodyNum == 0)
+        {
+            animator.SetBool("headOnly", true);
+        } else
+        {
+            animator.SetBool("headOnly", false);
+        }
+    }
+
+    public void moveAnimDetect(Vector2 dir)
+    {
+        if (dir == Vector2.up)
+        {
+            animator.SetInteger("Direction", 1);
+        } else if (dir == Vector2.right)
+        {
+            animator.SetInteger("Direction", 2);
+        } else if (dir == Vector2.down)
+        {
+            animator.SetInteger("Direction", 3);
+        } else if (dir == Vector2.left)
+        {
+            animator.SetInteger("Direction", 4);
+        }
+        animator.SetBool("startMove", true);
+    }
+ }

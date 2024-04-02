@@ -21,6 +21,7 @@ public class Food : Movable
     {
         if (!MoveIfCan(dir)) //即需要被吃
         {
+            Player.GetComponent<PlayerController>().moveAnimDetect(dir); //先转向...
             Eaten(dir);
         } else
         {

@@ -51,4 +51,9 @@ public class PlayerBodyController : MonoBehaviour
         }
         return true;
     }
+
+    public int BodyNum()
+    {
+        return transform.childCount;
+    }
 }

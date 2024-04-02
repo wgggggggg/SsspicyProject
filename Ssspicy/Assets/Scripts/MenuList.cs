@@ -22,7 +22,7 @@ public class MenuList : LevelControl
                 menuList.SetActive(false);
                 menuOpening = false;
                 Time.timeScale = 1f; //后续可以添加bgm的播放与暂停
-                PlayerController.pauseGame(false);
+                PlayerController.pausePlayerControl(false);
             }
         } else
         {
@@ -31,7 +31,7 @@ public class MenuList : LevelControl
                 menuList.SetActive(true);
                 menuOpening = true;
                 Time.timeScale = 0f;
-                PlayerController.pauseGame(true);
+                PlayerController.pausePlayerControl(true);
             }
         }
     }
@@ -41,6 +41,6 @@ public class MenuList : LevelControl
         menuList.SetActive(false);
         menuOpening = false;
         Time.timeScale = 1f; //后续可以添加bgm的播放与暂停
-        PlayerController.pauseGame(false);
+        PlayerController.pausePlayerControl(false);
     }
 }

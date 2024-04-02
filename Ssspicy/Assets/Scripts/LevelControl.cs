@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelControl : MonoBehaviour
 {
-    private int levelSelectScene = 2;
+    private int levelSelectScene = 6;
     private int passScene = 7;
     private int dieScene = 8;
     public void startLevel(int i)
