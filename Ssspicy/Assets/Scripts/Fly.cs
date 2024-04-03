@@ -10,6 +10,8 @@ public class Fly : MonoBehaviour
     public GameObject PlayerBody;
     public GameObject Player;
     public LayerMask FlyDetectLayer; //不包括身体和脑袋  也不包括沙坑洞口
+    public GameObject firePrefab;
+    public GameObject fire;
     bool start = false;
     LinkedList<GameObject> objectList;
     Queue<GameObject> toAddQueue;
@@ -17,8 +19,13 @@ public class Fly : MonoBehaviour
     public void FlyStart(Vector2 dir)
     {
         PlayerController.pausePlayerControl(true);
+        StartCoroutine(PauseForSeconds(0.5f));
         Player.GetComponent<Animator>().SetBool("flyStop", false);
         Player.GetComponent<Animator>().SetBool("spicyEat", true);
+        Player.GetComponent<Animator>().SetBool("startMove", false);
+        fire = Instantiate(firePrefab, transform);
+        fire.transform.position = transform.position + (Vector3)dir * -1.75f;
+        fire.GetComponent<Fire>().ChangeSprite(dir);
         flyDirection = dir;
         start = true;
         Start();
@@ -72,6 +79,13 @@ public class Fly : MonoBehaviour
         start = false;
         Player.GetComponent<PlayerController>().startDieOrPassDetect(); //启动死亡检测
         PlayerController.pausePlayerControl(false);
+        Destroy(fire);
+    }
 
+    IEnumerator PauseForSeconds(float seconds)
+    {
+        Time.timeScale = 0f; // 时间暂停
+        yield return new WaitForSecondsRealtime(seconds); // 等待实时时间
+        Time.timeScale = 1f; // 恢复时间
     }
 }

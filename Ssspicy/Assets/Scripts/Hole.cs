@@ -14,7 +14,7 @@ public class Hole : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        GetComponent<Animator>().SetBool("HoleOpen", IsOpen());
     }
 
     public bool IsOpen()
