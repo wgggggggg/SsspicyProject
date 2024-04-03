@@ -5,14 +5,15 @@ using UnityEngine;
 public class DropDown : MonoBehaviour
 {
     Vector2 nowPosition;
-
     // Start is called before the first frame update
 
     bool start = false;
 
-    public void dropStart()
+    public void dropStart(Vector2 position)
     {
+        nowPosition = position;
         start = true;
+        Start();
     }
     void Start()
     {
@@ -20,8 +21,7 @@ public class DropDown : MonoBehaviour
         {
             return;
         }
-        nowPosition = transform.position;
-        transform.position += (Vector3)Vector2.up * 15.0f;
+        transform.Translate(Time.deltaTime * 24.0f * Vector2.down);
     }
 
     // Update is called once per frame
@@ -33,7 +33,7 @@ public class DropDown : MonoBehaviour
         }
         if (nowPosition.y < transform.position.y)
         {
-            transform.position += Time.deltaTime * 24.0f * (Vector3)Vector2.down;
+            transform.Translate(Time.deltaTime * 24.0f * Vector2.down);
         } else
         {
             start = false;
