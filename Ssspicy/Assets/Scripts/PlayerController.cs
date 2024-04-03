@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
     public void Move(Vector2 dir)
     {
         //先移动身体，后移动头部
-        PlayerBody.GetComponent<PlayerBodyController>().moveBody();
+        PlayerBody.GetComponent<PlayerBodyController>().moveBody(dir);
         transform.Translate(dir);
         moveAnimDetect(dir);
     }

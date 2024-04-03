@@ -19,7 +19,7 @@ public class Banana : Food
     public override void Eaten(Vector2 dir)
     {
         Destroy(gameObject);
-        PlayerBody.GetComponent<PlayerBodyController>().addBodyBeforeMove();
+        PlayerBody.GetComponent<PlayerBodyController>().addBodyBeforeMove(dir);
         Player.GetComponent<PlayerController>().Move(dir);
     }
     
