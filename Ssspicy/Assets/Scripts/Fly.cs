@@ -6,12 +6,14 @@ using UnityEngine;
 public class Fly : MonoBehaviour
 {
     public Vector2 flyDirection; // 飞行方向
-    public float speed; // 飞行速度
+    private float speed = 5; // 飞行速度
     public GameObject PlayerBody;
     public GameObject Player;
     public LayerMask FlyDetectLayer; //不包括身体和脑袋  也不包括沙坑洞口
     public GameObject firePrefab;
     public GameObject fire;
+    private int maxDist = 25;
+    private Vector2 startPosition;
     bool start = false;
     LinkedList<GameObject> objectList;
     Queue<GameObject> toAddQueue;
@@ -35,6 +37,7 @@ public class Fly : MonoBehaviour
         objectList = new LinkedList<GameObject> ();
         toAddQueue = new Queue<GameObject> ();
         added = new HashSet<GameObject> ();
+        startPosition = transform.position;
         objectList.AddLast(Player);
         for (int i = 0; i < PlayerBody.transform.childCount; i++)
         {
@@ -52,6 +55,10 @@ public class Fly : MonoBehaviour
                 gb.transform.Translate(flyDirection * Time.deltaTime * speed);
                 // 发射一条射线，检测与其他物体的接触
                 RaycastHit2D hit = Physics2D.Raycast(gb.transform.position + (Vector3)flyDirection * 0.5f, flyDirection, 0.25f, FlyDetectLayer);
+                if ((startPosition - (Vector2)transform.position).magnitude > maxDist)
+                {
+                    LevelControl.DieScene();
+                }
                 //如果碰到Movable就带着一起走(先入队列),并且加入HashSet,防止重复进入objectList
                 if (hit.collider != null && hit.collider.GetComponent<Movable>() != null && !added.Contains(hit.collider.gameObject))
                 {

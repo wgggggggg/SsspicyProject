@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
     void MoveOrEat(Vector2 dir)
     {   
         //玩家能否前进一步(排除地面层)
-        RaycastHit2D hit = Physics2D.Raycast(transform.position + (Vector3)dir * 0.5f, dir, 0.5f, otherLayer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + (Vector3)dir * 0.3f, dir, 0.7f, otherLayer);
         if (!hit)
         {
             Move(dir);
@@ -153,15 +153,15 @@ public class PlayerController : MonoBehaviour
         {
             if (shouldFall())
             {
-                Debug.Log("此时哥们掉落了");
+                StartCoroutine(Die());
             }
             if (shouldPass())
             {
-                Debug.Log("此时哥们过关了");
+                LevelControl.startNextLevel();
             }
             if (shouldDie())
             {
-                Debug.Log("此时哥们踩到沙坑了");
+                StartCoroutine(Die());
             }
         }
     } //之后还需要加上洞口等
@@ -222,4 +222,12 @@ public class PlayerController : MonoBehaviour
         }
         animator.SetBool("startMove", true);
     }
- }
+
+    IEnumerator Die()
+    {
+        PlayerController.pausePlayerControl(true);
+        yield return new WaitForSeconds(0.5f);
+        LevelControl.DieScene();
+    }
+
+}

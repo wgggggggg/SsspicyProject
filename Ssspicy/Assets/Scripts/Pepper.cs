@@ -13,7 +13,7 @@ public class Pepper : Food
     // Update is called once per frame
     void Update()
     {
-        
+        FallifShould();
     }
 
     public override void Eaten(Vector2 dir)

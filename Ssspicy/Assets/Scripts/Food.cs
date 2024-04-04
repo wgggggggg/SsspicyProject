@@ -45,7 +45,8 @@ public class Food : Movable
 
     public override void gameStopIfShould()
     {
-        Debug.Log("此时游戏结束了");
+        LevelControl.DieScene();
     }
 
+    
 }

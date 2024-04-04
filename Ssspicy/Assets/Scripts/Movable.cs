@@ -27,7 +27,7 @@ public class Movable : MonoBehaviour
 
     public bool MoveIfCan(Vector2 dir)
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position + (Vector3)dir * 0.5f, dir, 0.5f, otherLayer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + (Vector3)dir * 0.3f, dir, 0.7f, otherLayer);
 
         if (!hit)
         {
@@ -71,6 +71,7 @@ public class Movable : MonoBehaviour
         GetComponent<DropDown>().dropStart((Vector2)transform.position + Vector2.down * 24);
         yield return new WaitForSeconds(1.5f);
         gameStopIfShould();
+        Destroy(gameObject);
     }
 
     public void FallifShould()

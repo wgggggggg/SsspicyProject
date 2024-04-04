@@ -7,7 +7,7 @@ public class Banana : Food
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -15,15 +15,12 @@ public class Banana : Food
     {
         FallifShould();
     }
-    
+
     public override void Eaten(Vector2 dir)
     {
         Destroy(gameObject);
         PlayerBody.GetComponent<PlayerBodyController>().addBodyBeforeMove(dir);
         Player.GetComponent<PlayerController>().Move(dir);
     }
-    
-
-
 
 }
