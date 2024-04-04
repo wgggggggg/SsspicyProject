@@ -8156,6 +8156,30 @@ PrefabInstance:
       propertyPath: Food
       value: 
       objectReference: {fileID: 823407358}
+    - target: {fileID: 5489792581490421789, guid: 972a926c2ddbc714e90c2cdde988163d, type: 3}
+      propertyPath: HoleShapes.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489792581490421789, guid: 972a926c2ddbc714e90c2cdde988163d, type: 3}
+      propertyPath: HoleShapes.Array.data[0]
+      value: 
+      objectReference: {fileID: -110671421, guid: 1c47f9f4312d28340afdd4eff172d2e7, type: 3}
+    - target: {fileID: 5489792581490421789, guid: 972a926c2ddbc714e90c2cdde988163d, type: 3}
+      propertyPath: HoleShapes.Array.data[1]
+      value: 
+      objectReference: {fileID: 1657139473, guid: 1c47f9f4312d28340afdd4eff172d2e7, type: 3}
+    - target: {fileID: 5489792581490421789, guid: 972a926c2ddbc714e90c2cdde988163d, type: 3}
+      propertyPath: HoleShapes.Array.data[2]
+      value: 
+      objectReference: {fileID: 753529952, guid: 1c47f9f4312d28340afdd4eff172d2e7, type: 3}
+    - target: {fileID: 5489792581490421789, guid: 972a926c2ddbc714e90c2cdde988163d, type: 3}
+      propertyPath: HoleShapes.Array.data[3]
+      value: 
+      objectReference: {fileID: -551987560, guid: 1c47f9f4312d28340afdd4eff172d2e7, type: 3}
+    - target: {fileID: 5489792581490421789, guid: 972a926c2ddbc714e90c2cdde988163d, type: 3}
+      propertyPath: HoleShapes.Array.data[4]
+      value: 
+      objectReference: {fileID: -1490757125, guid: 1c47f9f4312d28340afdd4eff172d2e7, type: 3}
     - target: {fileID: 8443129516972917863, guid: 972a926c2ddbc714e90c2cdde988163d, type: 3}
       propertyPath: m_Name
       value: Hole

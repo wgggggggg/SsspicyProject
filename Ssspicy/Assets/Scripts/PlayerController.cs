@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private bool dieOrPassDetect;
     public static bool shouldPausePlayerControl;
     private Animator animator;
+    private Vector2 nowDir;
     // Start is called before the first frame update
     void Start()
     {
@@ -97,6 +98,7 @@ public class PlayerController : MonoBehaviour
         PlayerBody.GetComponent<PlayerBodyController>().moveBody(dir);
         transform.Translate(dir);
         moveAnimDetect(dir);
+        nowDir = dir;
     }
 
     bool InGround()
@@ -153,15 +155,15 @@ public class PlayerController : MonoBehaviour
         {
             if (shouldFall())
             {
-                StartCoroutine(Die());
+                StartCoroutine(Fall());
             }
             if (shouldPass())
             {
-                LevelControl.startNextLevel();
+                StartCoroutine(enterHoleAnimAndResult(nowDir));
             }
             if (shouldDie())
             {
-                StartCoroutine(Die());
+                StartCoroutine(enterHoleAnimAndResult(nowDir));
             }
         }
     } //之后还需要加上洞口等
@@ -223,11 +225,83 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("startMove", true);
     }
 
-    IEnumerator Die()
+    void Die()
     {
         PlayerController.pausePlayerControl(true);
-        yield return new WaitForSeconds(0.5f);
         LevelControl.DieScene();
+    }
+    
+    void Pass()
+    {
+        LevelControl.startNextLevel();
+    }
+
+    IEnumerator enterHoleAnimAndResult(Vector2 dir)
+    {
+        pausePlayerControl(true);
+        RaycastHit2D hitBunker = Physics2D.Raycast(transform.position, Vector2.down, 0.1f, bunkerLayer);
+        RaycastHit2D hitHole = Physics2D.Raycast(transform.position, Vector2.down, 0.1f, holeLayer);
+        GameObject hole;
+        string result;
+        if (hitBunker)
+        {
+            hole = hitBunker.transform.gameObject;
+            result = "die";
+        } else
+        {
+            hole = hitHole.transform.gameObject;
+            result = "pass";
+            hole.GetComponent<Hole>().HoleShapeChange(dir);
+        }
+        Vector2 holePosition = hole.transform.position;
+        int bodyNum = PlayerBody.transform.childCount;
+        for (int i = bodyNum - 1; i >= 0; i--)
+        {
+            for (int j = bodyNum - 1; j >= 1; j--)
+            {
+                Transform nowBody = PlayerBody.transform.GetChild(j);
+                Transform nextBody = PlayerBody.transform.GetChild(j - 1);
+                nowBody.position = nextBody.position;
+            }
+            if (i == bodyNum - 1)
+            {
+                PlayerBody.transform.GetChild(0).position = transform.position;
+            }
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        if (result == "die")
+        {
+            Die();
+        } else if (result == "pass")
+        {
+            Pass();
+        }
+        pausePlayerControl(false);
+    }
+
+    IEnumerator Fall()
+    {
+        pausePlayerControl(true);
+        yield return new WaitForSeconds(0.5f);
+        LinkedList<GameObject> dropList = new LinkedList<GameObject>();
+        dropList.AddLast(gameObject);
+        for (int i = 0; i < PlayerBody.transform.childCount; i++)
+        {
+            dropList.AddLast(PlayerBody.transform.GetChild(i).gameObject);
+        }
+        int dropTimes = 0;
+        while (dropTimes < 100)
+        {
+            dropTimes++;
+            foreach (GameObject gb in dropList)
+            {
+                gb.transform.Translate(40.0f * Vector2.down * Time.deltaTime);
+            }
+            yield return new WaitForSeconds(0.01f);
+        }
+        Pass();
+        pausePlayerControl(false);
     }
 
 }
