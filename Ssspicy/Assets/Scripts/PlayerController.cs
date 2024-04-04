@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        restartDetect();
         if (shouldPausePlayerControl)
         {
             return;
@@ -34,6 +35,14 @@ public class PlayerController : MonoBehaviour
         moveDetect();
         dieOrPassDetectIfStart();
         bodyNumDetect();
+    }
+
+    void restartDetect()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            LevelControl.Restart();
+        }
     }
 
     void moveDetect()
@@ -300,7 +309,7 @@ public class PlayerController : MonoBehaviour
             }
             yield return new WaitForSeconds(0.01f);
         }
-        Pass();
+        Die();
         pausePlayerControl(false);
     }
 
