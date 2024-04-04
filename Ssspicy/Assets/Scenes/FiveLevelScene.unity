@@ -175,6 +175,9 @@ MonoBehaviour:
   otherLayer:
     serializedVersion: 2
     m_Bits: 16256
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   Player: {fileID: 708759638}
 --- !u!50 &23855425
 Rigidbody2D:
@@ -806,6 +809,9 @@ MonoBehaviour:
   otherLayer:
     serializedVersion: 2
     m_Bits: 16256
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   Player: {fileID: 708759638}
 --- !u!114 &166063376
 MonoBehaviour:
@@ -1040,6 +1046,9 @@ MonoBehaviour:
   otherLayer:
     serializedVersion: 2
     m_Bits: 16256
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   Player: {fileID: 708759638}
 --- !u!50 &325211891
 Rigidbody2D:
@@ -1434,6 +1443,9 @@ MonoBehaviour:
   otherLayer:
     serializedVersion: 2
     m_Bits: 16256
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   Player: {fileID: 708759638}
 --- !u!212 &392587743
 SpriteRenderer:
@@ -2018,6 +2030,9 @@ MonoBehaviour:
   otherLayer:
     serializedVersion: 2
     m_Bits: 16256
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   Player: {fileID: 708759638}
 --- !u!50 &569675511
 Rigidbody2D:
@@ -2353,6 +2368,9 @@ MonoBehaviour:
   otherLayer:
     serializedVersion: 2
     m_Bits: 16256
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   Player: {fileID: 708759638}
 --- !u!50 &658319674
 Rigidbody2D:
@@ -2898,6 +2916,9 @@ MonoBehaviour:
   otherLayer:
     serializedVersion: 2
     m_Bits: 16256
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   Player: {fileID: 708759638}
 --- !u!4 &823407360
 Transform:
@@ -3113,9 +3134,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 838649047}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdc4c8d600bb4da4c952ced74f952de0, type: 3}
+  m_Script: {fileID: 11500000, guid: 63a441c1e46ab4d438b3cd37f3c74bc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Food: {fileID: 823407358}
 --- !u!1 &887573255
 GameObject:
   m_ObjectHideFlags: 0
@@ -3381,6 +3403,9 @@ MonoBehaviour:
   otherLayer:
     serializedVersion: 2
     m_Bits: 16256
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   Player: {fileID: 708759638}
 --- !u!50 &1283173425
 Rigidbody2D:
@@ -4367,6 +4392,9 @@ MonoBehaviour:
   otherLayer:
     serializedVersion: 2
     m_Bits: 16256
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   Player: {fileID: 708759638}
 --- !u!50 &1714980846
 Rigidbody2D:
@@ -6928,6 +6956,9 @@ MonoBehaviour:
   otherLayer:
     serializedVersion: 2
     m_Bits: 16256
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   Player: {fileID: 708759638}
 --- !u!50 &2069754345
 Rigidbody2D:
@@ -7117,6 +7148,9 @@ MonoBehaviour:
   otherLayer:
     serializedVersion: 2
     m_Bits: 16256
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   Player: {fileID: 0}
 --- !u!50 &2070132659
 Rigidbody2D:
@@ -7287,6 +7321,9 @@ MonoBehaviour:
   otherLayer:
     serializedVersion: 2
     m_Bits: 16256
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   Player: {fileID: 708759638}
 --- !u!4 &2110908438
 Transform:

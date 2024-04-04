@@ -10,7 +10,7 @@ public class DropDownControl : MonoBehaviour
     void Start()
     {
         targetPositions = new Queue<Vector2>();
-        PlayerController.pausePlayerControl(true);
+        //PlayerController.pausePlayerControl(true);
         Init();
         StartCoroutine(StartDropDownAnimations());
         StartCoroutine(continuePlayerControl());
@@ -20,7 +20,6 @@ public class DropDownControl : MonoBehaviour
     {
         foreach (var gameObject in dropDownGameObjects)
         {
-            PlayerController.pausePlayerControl(true);
             gameObject.GetComponent<DropDown>().dropStart(targetPositions.Peek());
             targetPositions.Dequeue();
             yield return new WaitForSeconds(0.1f);
@@ -30,7 +29,7 @@ public class DropDownControl : MonoBehaviour
     IEnumerator continuePlayerControl()
     {
 
-        yield return new WaitForSeconds(dropDownGameObjects.Length * 0.1f);
+        yield return new WaitForSeconds(dropDownGameObjects.Length * 0.1f + 1.0f);
         PlayerController.pausePlayerControl(false);
     }
 

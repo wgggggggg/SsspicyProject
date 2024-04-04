@@ -13,13 +13,13 @@ public class PlayerController : MonoBehaviour
     public LayerMask holeLayer;
     public LayerMask otherLayer;
     private bool dieOrPassDetect;
-    private static bool shouldPausePlayerControl;
+    public static bool shouldPausePlayerControl;
     private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
         dieOrPassDetect = true;
-        shouldPausePlayerControl = false;
+        shouldPausePlayerControl = true;
         animator = GetComponent<Animator>();
     }
 

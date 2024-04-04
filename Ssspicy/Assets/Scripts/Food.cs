@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Food : Movable
-{
+{   
     // Start is called before the first frame update
     void Start()
     {
@@ -42,5 +42,10 @@ public class Food : Movable
         }
         return false;
     }
- 
+
+    public override void gameStopIfShould()
+    {
+        Debug.Log("此时游戏结束了");
+    }
+
 }

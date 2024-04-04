@@ -13,7 +13,7 @@ public class Ice : Movable
     // Update is called once per frame
     void Update()
     {
-        
+        FallifShould();
     }
 
 
